@@ -13,7 +13,8 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {isLoggedIn:false};
+        localStorage.setItem('username',"esteban@gmail.com");
+        localStorage.setItem('password',"2302");
     }
 
 
@@ -37,13 +38,13 @@ class App extends Component {
                     <br/>
 
                     <ul>
-                        <li><Link to="/">Login</Link></li>
-                        <li><Link to="/todo">Todo</Link></li>
+                        {localStorage.getItem('IsLoggedIn') === "true"?
+                        <li><Link to="/todo">Todo</Link></li> : <li><Link to="/">Login</Link></li>}
                     </ul>
 
                     <div>
-                        <Route exact path="/" component={LoginView}/>
-                       {this.state.isLoggedIn && <Route path="/todo" component={TodoAppView}/>}
+                        {localStorage.getItem('IsLoggedIn') === "true"?
+                            <Route path="/todo" component={TodoAppView}/> : <Route exact path="/" component={LoginView}/>}
                     </div>
                 </div>
             </Router>

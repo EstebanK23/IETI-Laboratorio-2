@@ -12,8 +12,22 @@ import './Login.css'
 
 
 export class Login extends React.Component{
+    
+    constructor(props) {
+        super(props);
+        this.state = {username:"", password:""};
+        this.handleChangePassword = this.handleChangePassword.bind(this);
+        this.handleChangeUsername = this.handleChangeUsername.bind(this);
 
+    }
+    
     render(){
+        const login = () => {
+            if (localStorage.getItem('username') === this.state.username && localStorage.getItem('password') === this.state.password){
+                localStorage.setItem('IsLoggedIn', "true");
+            }
+            
+        }
         return (
             <React.Fragment>
                 <CssBaseline />
@@ -26,7 +40,12 @@ export class Login extends React.Component{
                         <form className="form">
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="email">Email Address</InputLabel>
-                                <Input id="email" name="email" autoComplete="email" autoFocus />
+                                <Input id="email" 
+                                name="email" 
+                                autoComplete="email" 
+                                autoFocus
+                                onChange={this.handleChangeUsername}
+                                />
                             </FormControl>
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="password">Password</InputLabel>
@@ -35,6 +54,7 @@ export class Login extends React.Component{
                                     type="password"
                                     id="password"
                                     autoComplete="current-password"
+                                    onChange={this.handleChangePassword}
                                 />
                             </FormControl>
                             <Button
@@ -43,6 +63,7 @@ export class Login extends React.Component{
                                 variant="contained"
                                 color="primary"
                                 className="submit"
+                                onClick={login}
                             >
                                 Sign in
                             </Button>
@@ -52,7 +73,12 @@ export class Login extends React.Component{
             </React.Fragment>
         );
     }
-
+    handleChangeUsername(e) {
+        this.setState({Username : e.target.value});
+    }
+    handleChangePassword(e){
+        this.setState({password : e.target.value});
+    }
 }
 
 
